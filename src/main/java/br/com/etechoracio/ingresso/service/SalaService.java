@@ -1,13 +1,13 @@
 package br.com.etechoracio.ingresso.service;
 
 
+import br.com.etechoracio.ingresso.dto.SalaRequestDTO;
 import br.com.etechoracio.ingresso.dto.SalaResponseDTO;
-import br.com.etechoracio.ingresso.entity.Sessao;
 import br.com.etechoracio.ingresso.mapper.SalaMapper;
 import br.com.etechoracio.ingresso.repository.SalaRepository;
-import br.com.etechoracio.ingresso.repository.SessaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class SalaService {
     private SalaMapper salaMapper;
 
     public List<SalaResponseDTO> findAll() {
-        var result = salaRepository.findByDataExclusãoIsNull();
+        var result = salaRepository.findByDataExclusaoIsNull();
         return salaMapper.toSalaDTOList(result);
 
     }
@@ -38,5 +38,11 @@ public class SalaService {
         }
 
         return Optional.empty();
+    }
+
+    public SalaResponseDTO create (SalaRequestDTO dto){
+        var entity = salaMapper.toEntity(dto);
+        var salva  = salaRepository.save(entity);
+        return salaMapper.toSalaDTO(salva);
     }
 }
