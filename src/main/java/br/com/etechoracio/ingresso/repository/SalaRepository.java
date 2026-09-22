@@ -7,10 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface SalaRepository extends JpaRepository
         <Sala, Long>{
-    @Query("SELECT sa FROM Sala sa join fetch sa.sessao WHERE s.sessao.id = :idSessao")
-    List<Sala> findByIdSessao(Long idSessao);
+
+    List<Sala> findByDataExclusãoIsNull();
+
+    Optional<Sala> findByIdAndDataExclusaoIsNull(Long id);
 
 }

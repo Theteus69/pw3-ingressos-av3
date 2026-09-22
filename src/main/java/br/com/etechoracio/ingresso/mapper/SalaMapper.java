@@ -13,5 +13,5 @@ public interface SalaMapper {
 
         List<SalaResponseDTO> toSalaDTOList(List<Sala> entities);
 
-        SessaoSalaResponseDTO toSalaResponseDTO(Sala entity);
+        SalaResponseDTO toSalaDTO(Sala entity);
 }

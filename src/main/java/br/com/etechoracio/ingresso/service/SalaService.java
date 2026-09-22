@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SalaService {
@@ -20,12 +21,22 @@ public class SalaService {
     @Autowired
     private SalaMapper salaMapper;
 
-    @Autowired
-    private  SessaoRepository sessaoRepository;
-
-    public List<SalaResponseDTO> findByIdSessao() {
-        var result = salaRepository.findByIdSessao();
+    public List<SalaResponseDTO> findAll() {
+        var result = salaRepository.findByDataExclusãoIsNull();
         return salaMapper.toSalaDTOList(result);
 
+    }
+
+    public  Optional<SalaResponseDTO> findById(Long Id) {
+        var result = salaRepository.findByIdAndDataExclusaoIsNull(Id);
+        if(result.isPresent()){
+            var sala = result.get();
+
+            var dto = salaMapper.toSalaDTO(sala);
+
+            return Optional.of(dto);
+        }
+
+        return Optional.empty();
     }
 }
